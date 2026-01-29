@@ -1,0 +1,360 @@
+:root {
+    --primary: #6366F1;
+    --primary-hover: #4F46E5;
+    --accent: #10B981;
+    --bg: #F8FAFC;
+    --card: #FFFFFF;
+    --text: #1E293B;
+    --border: #E2E8F0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; }
+body { background: var(--bg); color: var(--text); padding: 40px 20px; }
+
+/* 1. 헤더 중앙 정렬 */
+.main-header { text-align: center; margin-bottom: 30px; }
+.main-header h1 { font-size: 2.5rem; color: var(--primary); font-weight: 800; }
+
+.header-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.donate-btn { width: auto; }
+
+/* 2. 통합 메인 보드 레이아웃 */
+.main-board {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.app-layout { display: grid; grid-template-columns: 1fr 1.2fr; min-height: 700px; }
+.input-side { padding: 40px; border-right: 1px solid var(--border); }
+.result-side { padding: 40px; background: #FBFCFE; }
+
+/* 3. [복구] 탭 버튼 디자인 */
+.tabs {
+    display: flex;
+    background: #F1F5F9;
+    padding: 6px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    gap: 6px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #64748B;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 4. 일체형 숫자 조절 바 (- 2 +) */
+.number-control {
+    display: inline-flex;
+    align-items: center;
+    background: #F1F5F9;
+    padding: 1px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+}
+.number-control button {
+    width: 36px; /* 버튼 크기 확대 */
+    height: 36px;
+    border: none;
+    background: white;
+    color: var(--primary);
+    font-size: 1.5rem; /* - + 기호 크기 대폭 확대 */
+    font-weight: 600; /* 기호 두께감 추가 */
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* 기호 수직 중앙 정렬 보정 */
+    transition: all 0.2s ease;
+}
+.number-control button:hover {
+    background: var(--primary);
+    color: white;
+}
+.number-control input {
+    width: 50px; text-align: center; border: none !important;
+    font-size: 1.1rem; font-weight: 800; color: var(--text);
+    background: transparent !important; outline: none;
+}
+/* 숫자 입력창 정렬 보정 */
+.number-control input {
+    width: 60px; /* 너비 소폭 확대 */
+    text-align: center !important; /* 무조건 중앙 정렬 */
+    border: none !important;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text);
+    background: transparent !important;
+    outline: none;
+    appearance: none; /* 브라우저 기본 화살표 제거 */
+    -moz-appearance: textfield; /* 파이어폭스 화살표 제거 */
+    padding: 0; /* 내부 여백 제거로 쏠림 방지 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.number-control input::-webkit-outer-spin-button,
+.number-control input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 5. 입력창 및 텍스트 박스 */
+.input-group label { display: block; margin-bottom: 10px; font-weight: 700; }
+textarea, .tier-members {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: #F8FAFC;
+    resize: none;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+textarea:focus, .tier-members:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+}
+
+/* 6. 밸런스 모드 카드 */
+.tier-card {
+    background: #F1F5F9;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    position: relative;
+    border: 1px solid var(--border);
+}
+.tier-name {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--primary);
+    outline: none;
+}
+.remove-tier {
+    position: absolute; top: 18px; right: 18px;
+    background: #FFE4E6; color: #F43F5E; border: none;
+    padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;
+}
+
+/* 7. 결과창 및 멤버 카드 */
+.result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+.btn-group { display: flex; gap: 8px; }
+.teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.team-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
+.team-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid #F1F5F9; padding-bottom: 8px; }
+
+.member-card {
+    background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px; margin: 6px 0; text-align: center; cursor: pointer;
+    font-weight: 600; min-height: 44px; position: relative;
+}
+.member-card.masked { background: #334155; color: transparent; }
+.member-card.masked::after { content: "❓"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; }
+.member-card.revealed { border-color: var(--accent); background: white; color: var(--text); }
+
+/* 8. 버튼 스타일 */
+.btn { padding: 14px 20px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn.sm { padding: 10px 12px; font-size: 0.9rem; border-radius: 10px; }
+.btn.primary { background: var(--primary); color: white; width: 100%; margin-top: 15px; font-size: 1.1rem; }
+.btn.primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+.btn.secondary { background: #F1F5F9; color: var(--text); }
+.btn.outline { border: 1px solid var(--primary); color: var(--primary); background: white; }
+
+/* 9. 기타 요소 */
+.empty-msg { text-align: center; color: #94A3B8; padding-top: 100px; line-height: 1.6; }
+.app-footer { margin-top: 40px; text-align: center; color: #94A3B8; font-size: 0.8rem; }
+.footer-links { margin-top: 10px; }
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 800;
+    cursor: pointer;
+    padding: 0;
+}
+.link-btn:hover { text-decoration: underline; }
+.hidden { display: none !important; }
+
+/* 10. 로딩 스피너 */
+.loading-area { text-align: center; padding: 40px 0; }
+.spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* 10.5 후원 모달 */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 999;
+}
+.modal {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border);
+}
+.modal-header h3 { font-size: 1.1rem; color: var(--text); }
+.icon-btn {
+    border: none;
+    background: #F1F5F9;
+    color: #334155;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 900;
+}
+.icon-btn:hover { background: #E2E8F0; }
+.modal-desc {
+    padding: 12px 18px 0;
+    color: #475569;
+    line-height: 1.55;
+    font-size: 0.95rem;
+}
+
+.donate-external { padding: 14px 18px 0; }
+.provider-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #F8FAFC;
+}
+.provider-meta { display: flex; flex-direction: column; gap: 4px; }
+.provider-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--border);
+    font-weight: 900;
+    color: var(--primary);
+    font-size: 0.85rem;
+}
+.provider-sub { font-size: 0.85rem; color: #64748B; }
+.provider-link {
+    white-space: nowrap;
+    text-decoration: none;
+    font-weight: 900;
+    color: var(--primary);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--primary);
+    background: white;
+    transition: 0.2s;
+}
+.provider-link:hover { background: var(--primary); color: white; transform: translateY(-1px); }
+
+.amount-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.amount-btn {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    font-weight: 900;
+    color: var(--text);
+    transition: 0.2s;
+}
+.amount-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+.amount-btn:active { transform: translateY(0px); }
+
+.donate-bank { padding: 0 18px 18px; }
+.bank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #F1F5F9;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+.bank-row .label {
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: #334155;
+    white-space: nowrap;
+}
+.bank-row .value {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #0F172A;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.hint {
+    display: block;
+    margin-top: 8px;
+    color: #94A3B8;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* 11. 모바일 대응 */
+@media (max-width: 900px) {
+    .app-layout { grid-template-columns: 1fr; }
+    .input-side { border-right: none; border-bottom: 1px solid var(--border); }
+    .modal { max-width: 560px; }
+}

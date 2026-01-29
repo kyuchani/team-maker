@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Master - 프리미엄 팀 메이커</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Team Master</h1>
+            <p>Team Master의 결과 화면은 방송 및 유튜브 콘텐츠 제작에 자유롭게 사용하실 수 있습니다.</p>
+            <div class="header-actions">
+                <button id="openDonateBtn" class="btn sm outline donate-btn" type="button">
+                    <i class="fa-solid fa-heart"></i>
+                    후원하기
+                </button>
+            </div>
+        </header>
+
+        <div class="main-board">
+            <main class="app-layout">
+                <div class="input-side">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchMode('simple')">랜덤 짜기</button>
+                        <button class="tab-btn" onclick="switchMode('balance')">밸런스 짜기</button>
+                    </div>
+                    
+
+                    <section class="settings">
+                        <div class="input-group">
+                            <label>총 몇 개의 팀으로 나눌까요?</label>
+                            <div class="number-control">
+                                <button onclick="changeTeamCount(-1)">-</button>
+                                <input type="number" id="teamCount" value="2" min="2" max="20" readonly>
+                                <button onclick="changeTeamCount(1)">+</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div id="mode-simple" class="mode-section">
+                        <div class="input-group">
+                            <label>참가자 명단 (엔터나 쉼표 구분)</label>
+                            <textarea id="simple-names" rows="10" placeholder="이름을 입력하세요..."></textarea>
+                        </div>
+                        <button id="btn-simple" class="btn primary full-width">🎲 랜덤 팀 생성하기</button>
+                    </div>
+
+                    <div id="mode-balance" class="mode-section hidden">
+                        <div id="tier-container"></div>
+                        <div class="actions">
+                            <button id="addTierBtn" class="btn secondary">그룹 추가</button>
+                            <button id="btn-balance" class="btn primary">밸런스 팀 생성</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-side">
+                    <div class="result-header">
+                        <h2>✨ 편성 결과</h2>
+                        <div class="btn-group">
+                            <button id="showAllBtn" class="btn sm secondary">한번에 보기</button>
+                            <button id="copyBtn" class="btn sm outline">결과 복사</button>
+                        </div>
+                    </div>
+                    
+                    <div id="loading-area" class="loading-area hidden">
+                        <div class="spinner"></div>
+                        <p>분석 중...</p>
+                    </div>
+
+                    <div id="empty-result" class="empty-msg">
+                        <p>왼쪽에서 명단을 입력하고<br>팀 생성 버튼을 눌러주세요!</p>
+                    </div>
+
+                    <div id="result-area" class="hidden">
+                        <div id="teams-output" class="teams-grid"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="app-footer">
+            <p>Team Master의 결과 화면은 방송 및 유튜브 콘텐츠 제작에 자유롭게 사용하실 수 있습니다.</p>
+            <p class="footer-links">
+                <button id="openDonateBtnFooter" class="link-btn" type="button">후원하기</button>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Donate modal -->
+    <div id="donateModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="donateTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="donateTitle">후원하기</h3>
+                <button id="closeDonateBtn" class="icon-btn" type="button" aria-label="닫기">✕</button>
+            </div>
+
+            <p class="modal-desc">
+                Team Master가 도움이 되었다면, 작은 후원으로 개발과 유지보수(서버/도메인/기능 개선)를 이어갈 수 있어요.
+            </p>
+
+            <div class="donate-external">
+                <div class="provider-row">
+                    <div class="provider-meta">
+                        <span class="provider-badge" id="donateProviderName">External</span>
+                        <span class="provider-sub">외부 후원 페이지로 안전하게 이동합니다.</span>
+                    </div>
+                    <a id="donateProviderLink" class="provider-link" href="#" target="_blank" rel="noopener">후원 페이지 열기</a>
+                </div>
+
+                <div class="amount-grid">
+                    <button class="amount-btn" type="button" data-amount="10">$10</button>
+                    <button class="amount-btn" type="button" data-amount="20">$20</button>
+                    <button class="amount-btn" type="button" data-amount="50">$50</button>
+                </div>
+                <small>Donation 후원 버튼은 후원 페이지로 이동합니다.</small>
+            </div>
+
+            
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
