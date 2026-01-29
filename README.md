@@ -5,7 +5,7 @@
 ---
 
 ## 🚀 서비스 바로가기
-**[🔗 https://kyuchani.github.io/team-master/](https://kyuchani.github.io/team-master/)**
+**[🔗 https://kyuchani.github.io/team-maker/](https://kyuchani.github.io/team-maker/)**
 
 ---
 
