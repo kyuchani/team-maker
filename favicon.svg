@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Neo Brutalism-style favicon: TEAM MASTER -->
+  <defs>
+    <filter id="neoShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feOffset dx="4" dy="4" result="off"/>
+      <feColorMatrix in="off" type="matrix"
+        values="0 0 0 0 0.0667
+                0 0 0 0 0.0902
+                0 0 0 0 0.1529
+                0 0 0 1 0"/>
+      <feBlend in="SourceGraphic" mode="normal"/>
+    </filter>
+  </defs>
+
+  <!-- Card -->
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#FFFFFF" filter="url(#neoShadow)"/>
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="none" stroke="#111827" stroke-width="3"/>
+
+  <!-- Accent bar -->
+  <rect x="14" y="14" width="36" height="10" rx="6" fill="#FCD34D" stroke="#111827" stroke-width="2"/>
+
+  <!-- Simple "group" glyph (3 heads + shoulders) -->
+  <!-- Heads -->
+  <circle cx="24" cy="34" r="4.2" fill="#6366F1" stroke="#111827" stroke-width="2"/>
+  <circle cx="40" cy="34" r="4.2" fill="#60A5FA" stroke="#111827" stroke-width="2"/>
+  <circle cx="32" cy="30" r="4.6" fill="#F472B6" stroke="#111827" stroke-width="2"/>
+
+  <!-- Shoulders -->
+  <path d="M18.5 46.5c1.8-4.7 10.2-4.7 12 0" fill="none" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+  <path d="M33.5 46.5c1.8-4.7 10.2-4.7 12 0" fill="none" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 47c2.2-6.2 13.8-6.2 16 0" fill="none" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+</svg>
