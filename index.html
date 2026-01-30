@@ -3,125 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Master - 프리미엄 팀 메이커</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Team Master - Neo Brutalism Edition</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6366F1",
+                        secondary: "#FCD34D",
+                        "accent-pink": "#F472B6",
+                        "accent-blue": "#60A5FA",
+                        "background-light": "#FFFBEB",
+                        "surface-light": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        display: ["'Fredoka'", "'Noto Sans KR'", "sans-serif"],
+                        sans: ["'Noto Sans KR'", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'neo': '4px 4px 0px 0px #111827',
+                        'neo-sm': '2px 2px 0px 0px #111827',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .neo-border { border: 2px solid #111827; }
+        .masked-card { background: #111827 !important; color: transparent !important; }
+        .masked-card::after { content: "❓"; color: white; position: absolute; font-size: 1.5rem; }
+        .revealed-card { border-color: #10B981 !important; transform: scale(1.02); }
+        input[type="number"]::-webkit-inner-spin-button { display: none; }
+        .team-count-btn span { font-family: inherit; }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header class="main-header">
-            <h1>Team Master</h1>
-            <p>Team Master의 결과 화면은 방송 및 유튜브 콘텐츠 제작에 자유롭게 사용하실 수 있습니다.</p>
-            <div class="header-actions">
-                <button id="openDonateBtn" class="btn sm outline donate-btn" type="button">
-                    <i class="fa-solid fa-heart"></i>
-                    후원하기
+<body class="bg-background-light font-sans text-gray-900 min-h-screen flex flex-col p-3 md:p-6">
+
+    <header class="py-4 md:py-5 text-center">
+        <h1 class="font-display font-black text-3xl md:text-4xl text-primary mb-1 drop-shadow-[2px_2px_0_rgba(0,0,0,1)] tracking-tight">
+            Team Master
+        </h1>
+        <p class="text-gray-600 text-sm md:text-base mb-2 font-medium max-w-2xl mx-auto">
+           Team Master의 결과 화면은 방송 및 유튜브 콘텐츠 제작에 자유롭게 사용하실 수 있습니다.
+        </p>
+        <button onclick="openDonateModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-700 bg-secondary neo-border shadow-neo-sm hover:shadow-neo hover:-translate-y-0.5 active:translate-y-0 transition-all">
+            <span class="material-symbols-rounded text-lg">volunteer_activism</span>
+            후원하기
+        </button>
+    </header>
+
+    <main class="flex-grow container mx-auto max-w-6xl min-h-0">
+        <div class="bg-white neo-border rounded-2xl shadow-neo flex flex-col lg:flex-row overflow-hidden">
+            
+            <div class="w-full lg:w-5/12 p-4 md:p-6 border-b-2 lg:border-b-0 lg:border-r-2 border-gray-900 bg-gray-50/50 flex flex-col min-h-0">
+                
+                <div class="bg-white p-2 rounded-xl neo-border shadow-neo-sm mb-4 flex gap-2">
+                    <button id="tab-simple" onclick="switchMode('simple')" class="flex-1 bg-secondary text-gray-900 font-bold py-2 rounded-lg neo-border shadow-neo-sm transition-all active:translate-y-[2px] active:shadow-none">
+                        랜덤 짜기
+                    </button>
+                    <button id="tab-balance" onclick="switchMode('balance')" class="flex-1 text-gray-500 font-medium py-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        밸런스 짜기
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-base font-bold mb-2 flex items-center gap-2">
+                        <span class="material-symbols-rounded text-accent-blue text-xl">groups</span>
+                        팀 개수
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="changeTeamCount(-1)" class="team-count-btn w-12 h-12 rounded-xl bg-white neo-border shadow-neo-sm flex items-center justify-center text-gray-800 hover:bg-accent-pink hover:text-white hover:border-gray-900 hover:shadow-neo active:translate-y-[2px] active:shadow-none transition-all select-none" aria-label="팀 수 줄이기">
+                            <span class="text-2xl font-black leading-none">−</span>
+                        </button>
+                        <input type="number" id="teamCount" value="2" readonly class="flex-1 bg-white neo-border rounded-xl h-12 text-center text-xl font-black shadow-neo-sm outline-none min-w-0">
+                        <button type="button" onclick="changeTeamCount(1)" class="team-count-btn w-12 h-12 rounded-xl bg-white neo-border shadow-neo-sm flex items-center justify-center text-gray-800 hover:bg-primary hover:text-white hover:border-gray-900 hover:shadow-neo active:translate-y-[2px] active:shadow-none transition-all select-none" aria-label="팀 수 늘리기">
+                            <span class="text-2xl font-black leading-none">＋</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="mode-simple" class="mb-4 flex-1 min-h-0 flex flex-col">
+                    <label class="block text-base font-bold mb-2 flex items-center gap-2">
+                        <span class="material-symbols-rounded text-accent-pink text-xl">edit_note</span>
+                        참가자 명단
+                    </label>
+                    <textarea id="simple-names" class="w-full min-h-[140px] flex-1 p-3 rounded-xl neo-border shadow-neo-sm resize-y focus:ring-0 focus:border-primary text-base placeholder-gray-400 max-h-[220px]" placeholder="이름을 엔터나 쉼표로 구분해 입력하세요..."></textarea>
+                </div>
+
+                <div id="mode-balance" class="mb-4 hidden">
+                    <div id="tier-container" class="space-y-4 mb-4"></div>
+                    <button onclick="addTierGroup()" class="w-full py-2 border-2 border-dashed border-gray-400 rounded-xl font-bold text-gray-500 hover:bg-gray-100 mb-4">+ 그룹 추가</button>
+                </div>
+
+                <button id="generateBtn" onclick="generateTeams()" class="w-full bg-primary text-white font-black text-lg py-3 rounded-xl neo-border shadow-neo hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#111827] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2 shrink-0">
+                    <span id="btn-icon" class="material-symbols-rounded">casino</span>
+                    <span id="btn-text">팀 생성하기</span>
                 </button>
             </div>
-        </header>
 
-        <div class="main-board">
-            <main class="app-layout">
-                <div class="input-side">
-                    <div class="tabs">
-                        <button class="tab-btn active" onclick="switchMode('simple')">랜덤 짜기</button>
-                        <button class="tab-btn" onclick="switchMode('balance')">밸런스 짜기</button>
-                    </div>
-                    
-
-                    <section class="settings">
-                        <div class="input-group">
-                            <label>총 몇 개의 팀으로 나눌까요?</label>
-                            <div class="number-control">
-                                <button onclick="changeTeamCount(-1)">-</button>
-                                <input type="number" id="teamCount" value="2" min="2" max="20" readonly>
-                                <button onclick="changeTeamCount(1)">+</button>
-                            </div>
-                        </div>
-                    </section>
-
-                    <div id="mode-simple" class="mode-section">
-                        <div class="input-group">
-                            <label>참가자 명단 (엔터나 쉼표 구분)</label>
-                            <textarea id="simple-names" rows="10" placeholder="이름을 입력하세요..."></textarea>
-                        </div>
-                        <button id="btn-simple" class="btn primary full-width">🎲 랜덤 팀 생성하기</button>
-                    </div>
-
-                    <div id="mode-balance" class="mode-section hidden">
-                        <div id="tier-container"></div>
-                        <div class="actions">
-                            <button id="addTierBtn" class="btn secondary">그룹 추가</button>
-                            <button id="btn-balance" class="btn primary">밸런스 팀 생성</button>
-                        </div>
+            <div class="w-full lg:w-7/12 p-4 md:p-6 bg-white relative min-h-[320px] flex flex-col">
+                <div class="flex justify-between items-center mb-4 border-b-2 border-gray-100 pb-3">
+                    <h2 class="text-2xl font-black flex items-center gap-2">
+                        <span class="text-secondary text-3xl material-symbols-rounded">auto_awesome</span>
+                        편성 결과
+                    </h2>
+                    <div class="flex gap-3">
+                        <button onclick="revealAll()" class="px-4 py-2 bg-gray-100 font-bold rounded-lg neo-border shadow-neo-sm hover:translate-y-[2px] hover:shadow-none transition-all text-sm">한번에 보기</button>
+                        <button onclick="copyResults()" class="px-4 py-2 bg-white text-primary neo-border border-primary font-bold rounded-lg shadow-neo-sm hover:translate-y-[2px] hover:shadow-none transition-all text-sm flex items-center gap-1">
+                            <span class="material-symbols-rounded text-sm">content_copy</span> 결과 복사
+                        </button>
                     </div>
                 </div>
 
-                <div class="result-side">
-                    <div class="result-header">
-                        <h2>✨ 편성 결과</h2>
-                        <div class="btn-group">
-                            <button id="showAllBtn" class="btn sm secondary">한번에 보기</button>
-                            <button id="copyBtn" class="btn sm outline">결과 복사</button>
-                        </div>
+                <div id="empty-state" class="flex-grow flex flex-col items-center justify-center text-center opacity-60">
+                    <div class="w-48 h-48 bg-gray-50 rounded-full flex items-center justify-center mb-6 neo-border border-dashed border-gray-300 animate-pulse">
+                        <span class="material-symbols-rounded text-6xl text-gray-300">groups</span>
                     </div>
-                    
-                    <div id="loading-area" class="loading-area hidden">
-                        <div class="spinner"></div>
-                        <p>분석 중...</p>
-                    </div>
-
-                    <div id="empty-result" class="empty-msg">
-                        <p>왼쪽에서 명단을 입력하고<br>팀 생성 버튼을 눌러주세요!</p>
-                    </div>
-
-                    <div id="result-area" class="hidden">
-                        <div id="teams-output" class="teams-grid"></div>
-                    </div>
+                    <p class="text-xl font-bold text-gray-400">왼쪽에서 명단을 입력하고<br/>팀 생성 버튼을 눌러주세요!</p>
                 </div>
-            </main>
+
+                <div id="loading-state" class="hidden flex-grow flex flex-col items-center justify-center text-center">
+                    <div class="w-20 h-20 border-8 border-gray-200 border-t-primary rounded-full animate-spin mb-4"></div>
+                    <p class="text-xl font-bold text-primary">팀 구성을 분석 중...</p>
+                </div>
+
+                <div id="result-grid" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
         </div>
+    </main>
 
-        <footer class="app-footer">
-            <p>Team Master의 결과 화면은 방송 및 유튜브 콘텐츠 제작에 자유롭게 사용하실 수 있습니다.</p>
-            <p class="footer-links">
-                <button id="openDonateBtnFooter" class="link-btn" type="button">후원하기</button>
-            </p>
-        </footer>
+    <footer class="py-4 text-center text-xs font-medium text-gray-500 shrink-0">
+        
+        <button onclick="openDonateModal()" class="inline-flex items-center gap-1.5 text-primary font-bold hover:underline mb-3">
+            <span class="material-symbols-rounded text-lg">volunteer_activism</span> 후원하기
+        </button>
+        <p>© 2026 kyuchani. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 후원 모달 -->
+    <div id="donateModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeDonateModal()">
+        <div class="bg-white neo-border rounded-2xl shadow-[8px_8px_0_0_#111827] max-w-md w-full overflow-hidden" onclick="event.stopPropagation()">
+            <div class="p-6 border-b-2 border-gray-900 flex justify-between items-center bg-secondary/20">
+                <h3 class="text-xl font-black flex items-center gap-2">
+                    <span class="material-symbols-rounded text-accent-pink">volunteer_activism</span>
+                    후원하기
+                </h3>
+                <button onclick="closeDonateModal()" class="w-10 h-10 rounded-xl neo-border bg-white shadow-neo-sm flex items-center justify-center hover:bg-gray-100 transition-all">
+                    <span class="material-symbols-rounded font-bold">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <p class="text-gray-600 leading-relaxed">Team Master가 도움이 되셨다면 커피 한 잔으로 응원해 주세요. 개발에 큰 힘이 됩니다!</p>
+                <a id="donateKofiLink" href="https://ko-fi.com/xhani" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-primary text-white font-black neo-border shadow-neo hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#111827] transition-all">
+                    <span class="material-symbols-rounded text-2xl">coffee</span>
+                    Ko-fi로 후원하기
+                </a>
+                <div class="flex gap-2">
+                    <a href="https://ko-fi.com/xhani?amount=5" target="_blank" rel="noopener" class="flex-1 py-3 rounded-xl bg-white neo-border shadow-neo-sm text-center font-bold hover:bg-accent-pink hover:text-white transition-all">$5</a>
+                    <a href="https://ko-fi.com/xhani?amount=10" target="_blank" rel="noopener" class="flex-1 py-3 rounded-xl bg-white neo-border shadow-neo-sm text-center font-bold hover:bg-primary hover:text-white transition-all">$10</a>
+                    <a href="https://ko-fi.com/xhani?amount=20" target="_blank" rel="noopener" class="flex-1 py-3 rounded-xl bg-white neo-border shadow-neo-sm text-center font-bold hover:bg-accent-blue hover:text-white transition-all">$20</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Donate modal -->
-    <div id="donateModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="donateTitle">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="donateTitle">후원하기</h3>
-                <button id="closeDonateBtn" class="icon-btn" type="button" aria-label="닫기">✕</button>
-            </div>
+    <script>
+        let currentMode = 'simple';
+        const teamCountInput = document.getElementById('teamCount');
+        const tierContainer = document.getElementById('tier-container');
 
-            <p class="modal-desc">
-                Team Master가 도움이 되었다면, 작은 후원으로 개발과 유지보수(서버/도메인/기능 개선)를 이어갈 수 있어요.
-            </p>
+        // 초기화
+        window.onload = () => {
+            addTierGroup("그룹 1 (예: 팀장급)");
+            addTierGroup("그룹 2 (예: 일반 멤버)");
+        };
 
-            <div class="donate-external">
-                <div class="provider-row">
-                    <div class="provider-meta">
-                        <span class="provider-badge" id="donateProviderName">External</span>
-                        <span class="provider-sub">외부 후원 페이지로 안전하게 이동합니다.</span>
-                    </div>
-                    <a id="donateProviderLink" class="provider-link" href="#" target="_blank" rel="noopener">후원 페이지 열기</a>
-                </div>
-
-                <div class="amount-grid">
-                    <button class="amount-btn" type="button" data-amount="10">$10</button>
-                    <button class="amount-btn" type="button" data-amount="20">$20</button>
-                    <button class="amount-btn" type="button" data-amount="50">$50</button>
-                </div>
-                <small>Donation 후원 버튼은 후원 페이지로 이동합니다.</small>
-            </div>
-
+        function switchMode(mode) {
+            currentMode = mode;
+            const simpleTab = document.getElementById('tab-simple');
+            const balanceTab = document.getElementById('tab-balance');
             
-        </div>
-    </div>
-    <script src="script.js"></script>
+            if(mode === 'simple') {
+                simpleTab.className = "flex-1 bg-secondary text-gray-900 font-bold py-2 rounded-lg neo-border shadow-neo-sm transition-all";
+                balanceTab.className = "flex-1 text-gray-500 font-medium py-2 hover:bg-gray-100 rounded-lg transition-colors";
+                document.getElementById('mode-simple').classList.remove('hidden');
+                document.getElementById('mode-balance').classList.add('hidden');
+            } else {
+                balanceTab.className = "flex-1 bg-secondary text-gray-900 font-bold py-2 rounded-lg neo-border shadow-neo-sm transition-all";
+                simpleTab.className = "flex-1 text-gray-500 font-medium py-2 hover:bg-gray-100 rounded-lg transition-colors";
+                document.getElementById('mode-balance').classList.remove('hidden');
+                document.getElementById('mode-simple').classList.add('hidden');
+            }
+        }
+
+        function changeTeamCount(delta) {
+            let val = parseInt(teamCountInput.value) + delta;
+            if (val >= 1 && val <= 20) teamCountInput.value = val;
+        }
+
+        function addTierGroup(placeholder = "참가자 이름 입력") {
+            const div = document.createElement('div');
+            div.className = "bg-white p-4 rounded-xl neo-border shadow-neo-sm relative space-y-2";
+            div.innerHTML = `
+                <button onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-accent-pink hover:scale-110 transition-transform"><span class="material-symbols-rounded">cancel</span></button>
+                <input type="text" placeholder="그룹 이름 (예: 1티어)" class="w-full border-none font-bold text-primary p-0 focus:ring-0">
+                <div class="border-t-2 border-gray-200 my-2"></div>
+                <textarea class="tier-members w-full h-20 border-none p-0 resize-none focus:ring-0 text-sm" placeholder="${placeholder}"></textarea>
+            `;
+            tierContainer.appendChild(div);
+        }
+
+        function parseNames(text) {
+            return text.split(/[,\n]+/).map(n => n.trim()).filter(n => n !== "");
+        }
+
+        function generateTeams() {
+            let teams = [];
+            const count = parseInt(teamCountInput.value);
+            
+            if(currentMode === 'simple') {
+                const names = parseNames(document.getElementById('simple-names').value);
+                if(names.length < count) return alert("팀 개수보다 참가자가 적습니다!");
+                names.sort(() => Math.random() - 0.5);
+                teams = Array.from({ length: count }, () => []);
+                names.forEach((name, i) => teams[i % count].push(name));
+            } else {
+                const tiers = document.querySelectorAll('.tier-members');
+                teams = Array.from({ length: count }, () => []);
+                let hasData = false;
+                tiers.forEach(t => {
+                    const members = parseNames(t.value);
+                    if(members.length > 0) {
+                        hasData = true;
+                        members.sort(() => Math.random() - 0.5);
+                        members.forEach((m, i) => teams[i % count].push(m));
+                    }
+                });
+                if(!hasData) return alert("명단을 입력해주세요!");
+            }
+
+            renderUI(teams);
+        }
+
+        function renderUI(teams) {
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('result-grid').classList.add('hidden');
+            document.getElementById('loading-state').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('loading-state').classList.add('hidden');
+                const grid = document.getElementById('result-grid');
+                grid.innerHTML = "";
+                grid.classList.remove('hidden');
+
+                teams.forEach((team, i) => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-5 rounded-2xl neo-border shadow-neo flex flex-col gap-3";
+                    card.innerHTML = `<h3 class="font-black text-lg border-b-2 border-gray-100 pb-2 flex justify-between">TEAM ${i+1} <span class="text-accent-blue text-sm">${team.length}명</span></h3>`;
+                    
+                    const mList = document.createElement('div');
+                    mList.className = "space-y-2";
+                    team.forEach(m => {
+                        const mCard = document.createElement('div');
+                        mCard.className = "member-item masked-card relative h-12 flex items-center justify-center neo-border rounded-xl font-bold transition-all cursor-pointer hover:scale-[1.02]";
+                        mCard.innerText = m;
+                        mCard.onclick = function() {
+                            this.classList.remove('masked-card');
+                            this.classList.add('revealed-card');
+                        };
+                        mList.appendChild(mCard);
+                    });
+                    card.appendChild(mList);
+                    grid.appendChild(card);
+                });
+            }, 1000);
+        }
+
+        function revealAll() {
+            const cards = document.querySelectorAll('.masked-card');
+            cards.forEach((c, i) => {
+                setTimeout(() => c.click(), i * 100);
+            });
+        }
+
+        function copyResults() {
+            const grids = document.querySelectorAll('#result-grid > div');
+            if(grids.length === 0) return;
+            let text = "🎉 Team Master 편성 결과\n\n";
+            grids.forEach((g, i) => {
+                text += `[TEAM ${i+1}]\n`;
+                const members = g.querySelectorAll('.member-item');
+                members.forEach(m => text += `- ${m.innerText}\n`);
+                text += "\n";
+            });
+            navigator.clipboard.writeText(text).then(() => alert("결과가 복사되었습니다!"));
+        }
+
+        function openDonateModal() {
+            document.getElementById('donateModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDonateModal() {
+            document.getElementById('donateModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', (e) => {
+            const m = document.getElementById('donateModal');
+            if (e.key === 'Escape' && m && !m.classList.contains('hidden')) closeDonateModal();
+        });
+    </script>
 </body>
 </html>
